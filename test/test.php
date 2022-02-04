@@ -1,8 +1,8 @@
 ﻿<?php
   // detekce aktivního serveru
   $ezer_server= 
-    $_SERVER["SERVER_NAME"]=='ipad.bean'        ? 0 : (        	// 0:lokální 
-    $_SERVER["SERVER_NAME"]=='ipad.setkani.org' ? 1 : -1);   	// 1:synology YMCA
+    $_SERVER["SERVER_NAME"]=='ipad.bean'      ? 0 : (       // 0:lokální 
+    $_SERVER["SERVER_NAME"]=='ezer.martin.eu' ? 1 : -1);   	// 1:synology YMCA
 
   // verze použitého jádra Ezeru
   $ezer_version= "ezer3.2"; 
