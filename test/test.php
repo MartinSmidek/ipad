@@ -6,6 +6,7 @@
 
   // verze použitého jádra Ezeru
   $ezer_version= "ezer3.2"; 
+  $_GET['pdo']= 2;
   $_GET['editor']= 0;
   $_GET['dbg']= 0; 
 

@@ -10,7 +10,7 @@ menu test { title:'test', type:'main'
     # =======================================================================================> TOUCH
     # demonstrace ovládání dotykem
     panel touch {type:'right', title:'[fa-hand-pointer-o] Swipe test', _sys:'fce'
-      menu m {type:'left', active:*, format:'f-'
+      menu m {type:'left', active:*, format:'f+'
         menu  {title:'Ovládání dotykem',type:'group'
           item  {title:"[fa-hand-pointer-o] Browse", par:{cmd:'on'}}
           func onclick(i:ezer) { var lorem:text
@@ -27,9 +27,9 @@ menu test { title:'test', type:'main'
       }
     }
     # ===================================================================================== APLIKACE
-    panel APPL {type:'right', title:'[fa-download] Git/DB', _sys:'str', skill:'m'
+    panel APPL {type:'right', title:'[fa-download] Nastavení', _sys:'str' // skill:'m'
       menu m {type:'left', format:'f+'
-        menu { title:'GitHub',type:'group',skill:'m'
+        menu { title:'GitHub', type:'group', active:no, //skill:'m'
           item { title:'[fa-question] show log'         par:{op:'show'}}
           // aplikace
           item { title:'[fa-question] Aplikace: git status'  par:{folder:'.',op:'cmd',cmd:'status'}}
@@ -49,7 +49,7 @@ menu test { title:'test', type:'main'
             if (sys('ezer','server')==0) 
               alert('nelze na vývojovém serveru')  
             else
-              info.append(php.git_make(i.par));
+              info.fill('',php.git_make(i.par));
           }
         }
       }

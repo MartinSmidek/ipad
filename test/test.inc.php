@@ -28,8 +28,7 @@
     );
 
   // specifické PHP moduly
-  $app_php=   array(
-    );
+  $app_php=   array();
   
   // aplikace se startem v podsložce
   require_once("$ezer_version/ezer_ajax.php");
