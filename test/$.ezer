@@ -51,7 +51,7 @@ menu test { title:'test', type:'main'
       }
     }
     # ===================================================================================== APLIKACE
-    panel syst {type:'right', title:'[fa-download] Nastavení', _sys:'str' // skill:'m'
+    panel syst {type:'right', title:'[fa-download] Nastavení', _sys:'str', skill:'m'
       menu m {type:'left', format:'f+'
         menu { title:'GitHub', type:'group', active:no, //skill:'m'
           // aplikace
