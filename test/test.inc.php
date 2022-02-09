@@ -40,7 +40,8 @@
 function git_make($par) {
   global $abs_root, $ezer_version;
   $bean= preg_match('/bean/',$_SERVER['SERVER_NAME'])?1:0;
-                                                    display("bean=$bean, $ezer_version");
+  display("$ezer_version, abs_root=$abs_root, bean=$bean");
+  if ($ezer_version!='ezer3.2') { fce_error("POZOR není aktivní jádro 3.2 ale $ezer_version"); }
   $cmd= $par->cmd;
   $folder= $par->folder;
   $lines= '';
@@ -53,10 +54,14 @@ function git_make($par) {
     case 'cmd':
       // nastav složku pro Git
       if ( $folder=='ezer') 
-        chdir("../$ezer_version");
+        chdir("./$ezer_version");
       elseif ( $folder=='skins') 
         chdir("./skins");
       // zruš starý obsah .git.log
+      elseif ( $folder=='.') 
+        chdir(".");
+      else
+        fce_error('chybná aktuální složka');
       $f= @fopen("$abs_root/docs/.git.log", "r+");
       if ($f !== false) {
           ftruncate($f, 0);
@@ -69,11 +74,13 @@ function git_make($par) {
         case 'log':
         case 'status':
           $exec= "git $cmd>$abs_root/docs/.git.log";
+          display($exec);
           exec($exec,$lines,$state);
           $msg.= "$state:$exec\n";
           break;
         case 'pull':
           $exec= "git pull origin $branch>$abs_root/docs/.git.log";
+          display($exec);
           exec($exec,$lines,$state);
           $msg.= "$state:$exec\n";
           break;
@@ -82,9 +89,11 @@ function git_make($par) {
             $msg= "na vývojových serverech (*.bean) příkaz fetch není povolen ";
           else {
             $exec= "git pull origin $branch>$abs_root/docs/.git.log";
+            display($exec);
             exec($exec,$lines,$state);
             $msg.= "$state:$exec\n";
             $exec= "git reset --hard origin/$branch>$abs_root/docs/.git.log";
+            display($exec);
             exec($exec,$lines,$state);
             $msg.= "$state:$exec\n";
           }
