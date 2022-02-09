@@ -59,6 +59,7 @@ function git_make($par) {
   $state= 0;
   $branch= $folder=='ezer' ? $ezer_version : 'master';
   switch ($cmd) {
+    case 'log':
     case 'status':
       $exec= "git $cmd";
       display($exec);
