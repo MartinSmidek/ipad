@@ -1,9 +1,7 @@
 # ------------------------------------------------------------------------------------------------ #
-# ==> Modul pro nalezení chyb v jádru Ezer                                                         #
+# ==> Modul pro vývoj a testování jádra Ezer verze 3.2                                             #
 #                                                                                                  #
-# Pro práci je třeba mít uživatele Guest s prázdným heslem                                         #                                                        #
-#                                                                                                  #
-# Ezer                                                   (c) 2021 Martin Šmídek <martin@smidek.eu> #
+# Ezer 3.2                                               (c) 2022 Martin Šmídek <martin@smidek.eu> #
 # ------------------------------------------------------------------------------------------------ #
 menu test { title:'test', type:'main'
   tabs w {title:"[fa-graduation-cap] Swipe me" 
@@ -11,23 +9,49 @@ menu test { title:'test', type:'main'
     # demonstrace ovládání dotykem
     panel touch {type:'right', title:'[fa-hand-pointer-o] Swipe test', _sys:'fce'
       menu m {type:'left', active:*, format:'f+'
-        menu  {title:'Ovládání dotykem',type:'group'
-          item  {title:"[fa-hand-pointer-o] Browse", par:{cmd:'on'}}
-          func onclick(i:ezer) { var lorem:text
+        menu g {title:'Ovládání dotykem',type:'group'
+          item i {title:"[fa-hand-pointer-o] Browse - fill",  par:{typ:'fill'}}
+          item   {title:"[fa-hand-pointer-o] Browse - table", par:{typ:'table'}}
+          func onclick(i:ezer) { 
             clear(); info.header(i);
-            lorem= php.lorem_ipsum(10); info.swipe.browse_fill(replace(lorem,' ','|'));
+            info.Init(i.par.typ);
           }
         }
       }
+      func onfocus() {
+      }
       use info: form right {
-        label [10,40,200,20] { title:'<b>test swipe</b>' }
-        browse swipe [10,60,200,200] { rows:20, qry_rows:1
-          show [,,200,] { title:'lorem ipsum' }
+        label [10,40,200,20] { title:'<b>test br</b>' }
+        browse br [10,60,200,200] { rows:20, qry_rows:1, // wheel:1
+          show lorem [,,200,] { title:'lorem ipsum' }
+          show names [,,200,] { title:'jména', data:_jmena.jmeno }
+          func onrowclick() {
+            copy_by_name(br,&info);
+          }
+        }
+        field lorem [260,60,100,]
+        button [370,60,,] { title:'[fa-arrow-left]' func onclick() { lorem= br.lorem; }}
+        field names [260,85,100,]
+        button [370,85,,] { title:'[fa-arrow-left]' func onclick() { names= br.names; }}
+        func Init(typ) { var lorem:text
+          clear();
+          br.selected('clear');
+          switch (typ) {
+            case 'table':
+              br.lorem.width(0); br.names.width(200);
+              br.browse_load();
+              break;
+            case 'fill':
+              br.lorem.width(200); br.names.width(0);
+              lorem= php.lorem_ipsum(10); 
+              br.browse_fill(replace(lorem,' ','||'));
+              break;
+          }
         }
       }
     }
     # ===================================================================================== APLIKACE
-    panel APPL {type:'right', title:'[fa-download] Nastavení', _sys:'str' // skill:'m'
+    panel syst {type:'right', title:'[fa-download] Nastavení', _sys:'str' // skill:'m'
       menu m {type:'left', format:'f+'
         menu { title:'GitHub', type:'group', active:no, //skill:'m'
           item { title:'[fa-question] show log'         par:{op:'show'}}
@@ -43,13 +67,20 @@ menu test { title:'test', type:'main'
           item { title:'[fa-gears] Ezer: git pull'       par:{folder:'ezer',op:'cmd',cmd:'pull'}}
           item { title:'[fa-gears] Ezer: git fetch ...'  par:{folder:'ezer',op:'cmd',cmd:'fetch'}
                                                             help:"po fetch>git reset --hard origin/ezer3.2"}
-          func onclick (i:ezer) {  
+          func onclick (i:ezer) {  var verze: text
             info.header(i);
-            // test zabraňující běhu na NTB
-            if (sys('ezer','server')==0) 
-              alert('nelze na vývojovém serveru')  
-            else
-              info.fill('',php.git_make(i.par));
+            verze= sys('ezer','version');
+            // test zabraňující běhu pod starým jádrem
+            if (verze=='ezer3.2') {
+              // test zabraňující běhu na NTB
+              if (sys('ezer','server')==0) 
+                alert('nelze na vývojovém serveru')  
+              else
+                info.fill('',php.git_make(i.par));
+            }
+            else {
+              alert(`určeno pro vývoj verze 3.2 - aktivní je ale jádro ${verze}`)
+            }
           }
         }
       }
@@ -73,4 +104,10 @@ form right [,,*,50] {
   func append(y) {
     if (y) note= conc(note,y)
   }
+}
+table _jmena { key_id:'id_jmena'
+  number id_jmena
+  text   jmeno
+  number cetnost
+  number sex
 }

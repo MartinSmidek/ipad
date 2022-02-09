@@ -2,16 +2,22 @@
   // detekce aktivního serveru
   $ezer_server= 
     $_SERVER["SERVER_NAME"]=='ipad.bean'      ? 0 : (       // 0:lokální 
-    $_SERVER["SERVER_NAME"]=='ezer.martin.eu' ? 1 : -1);   	// 1:synology YMCA
+    $_SERVER["SERVER_NAME"]=='ezer.smidek.eu' ? 1 : -1);   	// 1:synology YMCA
 
   // verze použitého jádra Ezeru
-  $ezer_version= "ezer3.2"; 
+  $ezer_version= isset($_GET['ezer']) ? "ezer{$_GET['ezer']}" : 'ezer3.2'; 
+  // defaultní nastavení přepínačů
   $_GET['pdo']= 2;
   $_GET['editor']= 0;
-  $_GET['dbg']= 0; 
-
+  $_GET['dbg']= 1; 
+  $_GET['err']= 1; 
+  $_GET['gmap']= 0; 
+  $_GET['smap']= 0; 
+  $_GET['touch']= 1; 
+  $_GET['menu']= "w.touch.m.g.i";
+  
   // parametry aplikace LAB
-  $app_name=  "iPad ";
+  $app_name=  "iPad/$ezer_version";
   $app_root=  'test';
   $app_js=    array();
   $app_css=   array();
@@ -23,7 +29,7 @@
     );
   $rel_roots= array(
       "http://ipad.bean:8080",
-      "https://ipad.setkani.org"
+      "http://ezer.smidek.eu"
     );
 
   // (re)definice Ezer.options
