@@ -48,6 +48,19 @@ menu test { title:'test', type:'main'
               break;
           }
         }
+        # ------------------------------------------------------------------------------==> awesome
+        select w1 [260,210,90,] {tag:'w_', help:"nápoje" }
+        select w2 [260,235,90,] {tag:'w_', type:'multi', help:'směs' }
+        select [260,260,90,] {tag:'w_', type:'auto', par:{fce:'test_auto'}}
+        field  [260,285,90,] {tag:'w_', type:'list', value:'alfa,beta'}
+        field  [260,310,90,] {tag:'w_', type:'date', value:'8.12.2014'}
+        field  [260,335,90,] {tag:'w_', value:'ahoj'}
+        button [360,210,,]   {tag:'w', title:"disable"
+          func onclick() { form.enable(0,'w_') }}
+        button [416,210,,] {tag:'w', title:"selects"
+          func onclick() { w1.selects('voda:1,víno:2,pivo:3'); w2.selects('voda:1,víno:2,pivo:3') }}
+        button [360,235,,] {tag:'w', title:"enable all buttons"
+          func onclick() { form.enable(1,'w_') }}
       }
     }
     # ===================================================================================== APLIKACE

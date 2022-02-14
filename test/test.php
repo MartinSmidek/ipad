@@ -6,6 +6,7 @@
 
   // verze použitého jádra Ezeru
   $ezer_version= isset($_GET['ezer']) ? "ezer{$_GET['ezer']}" : 'ezer3.2'; 
+
   // defaultní nastavení přepínačů
   $_GET['pdo']= 2;
   $_GET['editor']= 0;
