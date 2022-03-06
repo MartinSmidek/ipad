@@ -1,0 +1,2 @@
+#pragma attrib
+func onfocus() { alert('Jsem zde') }

@@ -1,0 +1,4 @@
+#pragma attrib
+    panel attr { type:'plain', title:"Atributy 3.2", include:'onclick,test.comp.attr' }
+    panel alrt { type:'plain', title:"Alert 3.2", include:'onclick' }
+

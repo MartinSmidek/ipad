@@ -3,108 +3,59 @@
 #                                                                                                  #
 # Ezer 3.2                                               (c) 2022 Martin Šmídek <martin@smidek.eu> #
 # ------------------------------------------------------------------------------------------------ #
-menu test { title:'test', type:'main'
-  tabs w {title:"[fa-graduation-cap] Swipe me" 
-    # =======================================================================================> TOUCH
+menu test { type:'main' // title:'test'
+  tabs touch { title:'Touch' //title:"[fa-graduation-cap] Swipe me" 
+    # =======================================================================================> BROW
     # demonstrace ovládání dotykem
-    panel touch {type:'right', title:'[fa-hand-pointer-o] Swipe test', _sys:'fce'
-      menu m {type:'left', active:*, format:'f+'
-        menu g {title:'Ovládání dotykem',type:'group'
-          item i {title:"[fa-hand-pointer-o] Browse - fill",  par:{typ:'fill'}}
-          item   {title:"[fa-hand-pointer-o] Browse - table", par:{typ:'table'}}
-          func onclick(i:ezer) { 
-            clear(); info.header(i);
-            info.Init(i.par.typ);
-          }
-        }
-      }
-      func onfocus() {
-      }
-      use info: form right {
-        label [10,40,200,20] { title:'<b>test br</b>' }
-        browse br [10,60,200,200] { rows:20, qry_rows:1, // wheel:1
-          show lorem [,,200,] { title:'lorem ipsum' }
-          show names [,,200,] { title:'jména', data:_jmena.jmeno }
-          func onrowclick() {
-            copy_by_name(br,&info);
-          }
-        }
-        field lorem [260,60,100,]
-        button [370,60,,] { title:'[fa-arrow-left]' func onclick() { lorem= br.lorem; }}
-        field names [260,85,100,]
-        button [370,85,,] { title:'[fa-arrow-left]' func onclick() { names= br.names; }}
-        func Init(typ) { var lorem:text
-          clear();
-          br.selected('clear');
-          switch (typ) {
-            case 'table':
-              br.lorem.width(0); br.names.width(200);
-              br.browse_load();
-              break;
-            case 'fill':
-              br.lorem.width(200); br.names.width(0);
-              lorem= php.lorem_ipsum(10); 
-              br.browse_fill(replace(lorem,' ','||'));
-              break;
-          }
-        }
-        # ------------------------------------------------------------------------------==> awesome
-        select w1 [260,210,90,] {tag:'w_', help:"nápoje" }
-        select w2 [260,235,90,] {tag:'w_', type:'multi', help:'směs' }
-        select [260,260,90,] {tag:'w_', type:'auto', par:{fce:'test_auto'}}
-        field  [260,285,90,] {tag:'w_', type:'list', value:'alfa,beta'}
-        field  [260,310,90,] {tag:'w_', type:'date', value:'8.12.2014'}
-        field  [260,335,90,] {tag:'w_', value:'ahoj'}
-        button [360,210,,]   {tag:'w', title:"disable"
-          func onclick() { form.enable(0,'w_') }}
-        button [416,210,,] {tag:'w', title:"selects"
-          func onclick() { w1.selects('voda:1,víno:2,pivo:3'); w2.selects('voda:1,víno:2,pivo:3') }}
-        button [360,235,,] {tag:'w', title:"enable all buttons"
-          func onclick() { form.enable(1,'w_') }}
-      }
-    }
-    # ===================================================================================== APLIKACE
-    panel syst {type:'right', title:'[fa-download] Nastavení', _sys:'str', skill:'m'
-      menu m {type:'left', format:'f+'
-        menu { title:'GitHub', type:'group', active:no, //skill:'m'
-          // aplikace
-          item { title:'[fa-question] Aplikace: git status'  par:{folder:'.',cmd:'status'}}
-          item { title:'[fa-gear] Aplikace: git log'         par:{folder:'.',cmd:'log'}}
-          item { title:'[fa-gear] Aplikace: git pull'        par:{folder:'.',cmd:'pull'}}
-          item { title:'[fa-gear] Aplikace: git fetch ...'   par:{folder:'.',cmd:'fetch'}
-                                                                help:"po fetch>git reset --hard origin/master"}
-          // jádro
-          item { title:'[fa-question] Ezer: git status'  par:{folder:'ezer',cmd:'status'}}
-          item { title:'[fa-gears] Ezer: git log'        par:{folder:'ezer',cmd:'log'}}
-          item { title:'[fa-gears] Ezer: git pull'       par:{folder:'ezer',cmd:'pull'}}
-          item { title:'[fa-gears] Ezer: git fetch ...'  par:{folder:'ezer',cmd:'fetch'}
-                                                            help:"po fetch>git reset --hard origin/ezer3.2"}
-          func onclick (i:ezer) {  var verze: text
-            info.header(i);
-            verze= sys('ezer','version');
-            // test zabraňující běhu pod starým jádrem
-            if (verze=='ezer3.2') {
-              // test zabraňující běhu na NTB
-              if (sys('ezer','server')==0) 
-                alert('nelze na vývojovém serveru')  
-              else
-                info.fill('',php.git_make(i.par));
-            }
-            else {
-              alert(`určeno pro vývoj verze 3.2 - aktivní je ale jádro ${verze}`)
-            }
-          }
-        }
-      }
-      use info: form right 
-    }
+    panel brow {title:'Browse' type:'right', include:'onload' }
+//    panel brow {type:'plain', include:'onload' }
+//    # ===================================================================================== APLIKACE
+//    panel syst {type:'right', title:'[fa-download] Nastavení', _sys:'str', skill:'m'
+//      menu m {type:'left', format:'f+'
+//        menu { title:'GitHub', type:'group', active:no, //skill:'m'
+//          // aplikace
+//          item { title:'[fa-question] Aplikace: git status'  par:{folder:'.',cmd:'status'}}
+//          item { title:'[fa-gear] Aplikace: git log'         par:{folder:'.',cmd:'log'}}
+//          item { title:'[fa-gear] Aplikace: git pull'        par:{folder:'.',cmd:'pull'}}
+//          item { title:'[fa-gear] Aplikace: git fetch ...'   par:{folder:'.',cmd:'fetch'}
+//                                                                help:"po fetch>git reset --hard origin/master"}
+//          // jádro
+//          item { title:'[fa-question] Ezer: git status'  par:{folder:'ezer',cmd:'status'}}
+//          item { title:'[fa-gears] Ezer: git log'        par:{folder:'ezer',cmd:'log'}}
+//          item { title:'[fa-gears] Ezer: git pull'       par:{folder:'ezer',cmd:'pull'}}
+//          item { title:'[fa-gears] Ezer: git fetch ...'  par:{folder:'ezer',cmd:'fetch'}
+//                                                            help:"po fetch>git reset --hard origin/ezer3.2"}
+//          func onclick (i:ezer) {  var verze: text
+//            info.header(i);
+//            verze= sys('ezer','version');
+//            // test zabraňující běhu pod starým jádrem
+//            if (verze=='ezer3.2') {
+//              // test zabraňující běhu na NTB
+//              if (sys('ezer','server')==0) 
+//                alert('nelze na vývojovém serveru')  
+//              else
+//                info.fill('',php.git_make(i.par));
+//            }
+//            else {
+//              alert(`určeno pro vývoj verze 3.2 - aktivní je ale jádro ${verze}`)
+//            }
+//          }
+//        }
+//      }
+//      use info: form right [12,4,,] 
+//    }
   }
+  tabs comp { title:"Kompilace" include:'onload'
+//    panel attr { type:'plain', title:"Atributy 3.2", include:'onclick,test.comp.attr' }
+//    panel alrt { type:'plain', title:"Alert 3.2", include:'onclick' }
+  }
+  tabs doc  {title:"Nápověda", include:'onclick,ezer2.help' }
 }
 # ------------------------------------------------==> .. _right
 # univerzální formulář pro levostranné menu
-form right [,,*,50] {
-  label head [10,0,*,50]  { title:'' }
-  label note [10,50,*,550] { title:'' }
+form right [,,*,*] {
+  label head [10,5,*,30]  { title:' ' } //, style:'width:calc(100% - 20px)' }
+  label note [10,40,*,*] { title:' ' } //, style:'width:calc(100% - 20px);height:calc(100% - 40px)' }
   func header(i:ezer) { var i_owner:ezer
     clear(); i_owner= i.owner();
     head= replace_fa(`<div class='karta'>${i_owner.title} - ${i.title}</div>`);
@@ -116,10 +67,6 @@ form right [,,*,50] {
   func append(y) {
     if (y) note= conc(note,y)
   }
-}
-table _jmena { key_id:'id_jmena'
-  number id_jmena
-  text   jmeno
-  number cetnost
-  number sex
+  const left=360
+  button butbut [left+10,135,,] { title:'[fa-exclamation]' }
 }

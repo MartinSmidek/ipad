@@ -18,7 +18,7 @@
   
   // inicializace objektu Ezer
   $EZER= (object)array(
-      'version'=>"ezer{$_SESSION[$ezer_root]['ezer']}",
+      'version'=>$ezer_version,
       'options'=>(object)array()
   );
 
@@ -28,7 +28,7 @@
     );
 
   // specifické PHP moduly
-  $app_php=   array();
+  $app_php=   array("$ezer_version/server/comp2.php");
   
   // aplikace se startem v podsložce
   require_once("$ezer_version/ezer_ajax.php");
@@ -96,4 +96,37 @@ function git_make($par) {
   $msg.= $lines ? '<hr>'.implode('<br>',$lines) : '';
   return $msg;
 }
-
+# ---------------------------------------------------------------------------------------- test_auto
+# test autocomplete
+function test_auto($patt,$par) {  trace();
+                                                      debug($par,"test_auto.par");
+  $a= (object)array();
+  $limit= 10;
+  $n= 0;
+  if ( !$patt ) {
+    $a->{0}= "... zadejte vzor";
+  }
+  else {
+    if ( $par->prefix ) {
+      $patt= "{$par->prefix}$patt";
+    }
+    // zpracování vzoru
+    $qry= "SELECT id_jmena AS _key,jmeno AS _value
+           FROM _jmena
+           WHERE jmeno LIKE '$patt%' ORDER BY jmeno LIMIT $limit";
+                                                        display("test_auto:$qry");
+    $res= pdo_qry($qry);
+    while ( $res && $t= pdo_fetch_object($res) ) {
+      if ( ++$n==$limit ) break;
+      $a->{$t->_key}= $t->_value;
+    }
+                                                        display("test_auto:$n,$limit");
+    // obecné položky
+    if ( !$n )
+      $a->{0}= "... nic nezačíná $patt";
+    elseif ( $n==$limit )
+      $a->{999999}= "... a další";
+  }
+                                                      debug($a,"test_auto");
+  return $a;
+}

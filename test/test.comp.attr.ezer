@@ -1,0 +1,52 @@
+#pragma attrib,-nogen
+//const c1={co:'něco'}
+//const x="něco"
+const c2=2+3
+//var   v1=4+5
+//menu m {type:'context' 
+//  active:m.i
+//  active:*
+//  title:x 
+//  par:{a:{b:2}}
+//  par:{a:[1,2]}
+//  item i 
+//}
+//const red='color:red'
+//func onfocus() { u1.load(1) }
+//use u1: form {
+//use u1: form _f
+//form _f { 
+//  view d: table _jmena {
+//    join:'left'
+//  }
+//  button b1 { title:"zkompiluj se" //style:red //'color:red'
+//    func f1() {
+//      echo(red)
+//    }
+//    func f2() {
+//      php.get_expr4('1+1') // pro zobrazení CG
+//    }
+//  }
+//  field [0,0,100,] { data:_jmena.jmeno }
+//  field { data:d.jmeno }
+//  field { type:'date'
+//    tabindex:-1 
+//    sql_pipe:'sql_date1' 
+//    map_pipe:mp.jmeno
+//    map_pipe:sex_jmena.zkratka
+//  }
+//  select
+//}
+
+//const a2:text
+//form f2 { css:a }
+
+# --------------------------------------------------------------------------------==> tabulky
+//table _jmena { key_id:'id_jmena'
+//  number id_jmena
+//  text   jmeno
+//  number cetnost
+//  number sex
+//}
+//map mp: table _jmena
+//map sex_jmena= "i,zkratka,nazev;0:-:-,1:m:male,2:f:female" 

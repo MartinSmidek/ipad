@@ -14,14 +14,14 @@
   $_GET['err']= 1; 
   $_GET['gmap']= 0; 
   $_GET['smap']= 0; 
-  $_GET['touch']= 1; 
-  $_GET['menu']= "w.touch.m.g.i";
+//  $_GET['touch']= 1; 
+//  $_GET['menu']= "touch.brow.m.g.i";
   
   // parametry aplikace LAB
-  $app_name=  "iPad/$ezer_version";
+  $app_name=  "iPad";
   $app_root=  'test';
   $app_js=    array();
-  $app_css=   array();
+  $app_css=   array("$ezer_version/client/wiki.css");
   $skin=      'ck';
 
   $abs_roots= array(
@@ -45,6 +45,11 @@
   );
   $app_login= 'Guest/';                   // pouze pro automatické přihlášení
   
+  // bude vloženo do objektu Ezer.konst
+  $const= (object)array(
+    'aaa' => "5"
+  , 'll' => 260
+  );
   // je to aplikace se startem v podsložce
   require_once("../$ezer_version/ezer_main.php");
 

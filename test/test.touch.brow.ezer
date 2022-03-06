@@ -1,0 +1,76 @@
+#pragma attrib
+# ------------------------------------------------------------------------------------------------ #
+# ==> Modul pro vývoj a testování jádra Ezer verze 3.2                                             #
+#                                                                                                  #
+# Ezer 3.2                                               (c) 2022 Martin Šmídek <martin@smidek.eu> #
+# ------------------------------------------------------------------------------------------------ #
+
+# =======================================================================================> TOUCH
+# demonstrace ovládání dotykem
+
+func onfirstfocus() {
+  m.g.i.click()
+}
+menu m {type:'left', active:m.g.j, format:'f+'
+  menu g {title:'Ovládání dotykem',type:'group'
+    item i {title:"[fa-hand-pointer-o] Browse - fill",  par:{typ:'fill'}}
+    item j {title:"[fa-hand-pointer-o] Browse - table", par:{typ:'table'}}
+    func onclick(i:ezer) { 
+      clear(); info.header(i);
+      info.Init(i.par.typ);
+    }
+  }
+}
+proc info.butbut.onclick() { alert('?')}
+use info: form right {
+  browse br [10,60,200,200] { rows:20, qry_rows:1, // wheel:1
+    show lorem [,,200,] { title:'lorem ipsum' }
+    show idn { data:_jmena.id_jmena }
+    show names [,,200,] { title:'jména', data:_jmena.jmeno }
+    func onrowclick() {
+      copy_by_name(br,&info);
+    }
+  }
+  field lorem [260,60,100,]
+  button [370,60,,] { title:'[fa-arrow-left]' func onclick() { lorem= br.lorem; }}
+  field names [260,85,100,]
+  button [370,85,,] { title:'[fa-arrow-left]' func onclick() { names= br.names; }}
+  button but [370,110,,] { title:'[fa-question]' }
+  func Init(typ) { var lorem:text
+    clear();
+    br.selected('clear');
+    switch (typ) {
+      case 'table':
+        br.lorem.width(0); br.names.width(200);
+        br.browse_load();
+        break;
+      case 'fill':
+        br.lorem.width(200); br.names.width(0);
+        lorem= php.lorem_ipsum(10); 
+        br.browse_fill(replace(lorem,' ','|'));
+        break;
+    }
+  }
+  # ------------------------------------------------------------------------------==> awesome
+  const ll=250 //:number
+  select w1 [ll,210,90,] {tag:'w_', help:"nápoje" }
+  select w2 [ll,235,90,] {tag:'w_', type:'multi', help:'směs' }
+  select [260,260,90,] {tag:'w_', type:'auto', par:{fce:'test_auto'}}
+  field  [260,285,90,] {tag:'w_', type:'list', value:'alfa,beta'}
+  field  [260,310,90,] {tag:'w_', type:'date', value:'13.3.2021'}
+  field  [260,335,90,] {tag:'w_', value:'ahoj'}
+  button [360,210,,]   {tag:'w', title:"disable"
+    func onclick() { form.enable(0,'w_') }}
+  button [416,210,,] {tag:'w', title:"selects"
+    const itms= 'voda:1,víno:2,pivo:3'
+    func onclick() { w1.selects(itms); w2.selects(itms) }}
+  button [360,235,,] {tag:'w', title:"enable all buttons"
+    func onclick() { form.enable(1,'w_') }}
+}
+# --------------------------------------------------------------------------------==> tabulky
+table _jmena { key_id:'id_jmena'
+  number id_jmena
+  text   jmeno
+  number cetnost
+  number sex
+}
