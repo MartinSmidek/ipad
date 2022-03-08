@@ -50,6 +50,7 @@ use info: form right {
         br.browse_fill(replace(lorem,' ','|'));
         break;
     }
+    br.raise('onrowclick');
   }
   # ------------------------------------------------------------------------------==> awesome
   const ll=250 //:number

@@ -4,8 +4,9 @@
     $_SERVER["SERVER_NAME"]=='ipad.bean'      ? 0 : (       // 0:lokální 
     $_SERVER["SERVER_NAME"]=='ezer.smidek.eu' ? 1 : -1);   	// 1:synology YMCA
 
-  // verze použitého jádra Ezeru
-  $ezer_version= isset($_GET['ezer']) ? "ezer{$_GET['ezer']}" : 'ezer3.2'; 
+  // verze použitého jádra Ezeru a varianta aplikace
+  $ezer_version= isset($_GET['ezer']) ? "ezer{$_GET['ezer']}" : '3.2'; 
+  $appl_version= '0.9';
 
   // defaultní nastavení přepínačů
   $_GET['pdo']= 2;
@@ -21,7 +22,7 @@
   $app_name=  "iPad";
   $app_root=  'test';
   $app_js=    array();
-  $app_css=   array("$ezer_version/client/wiki.css");
+  $app_css=   array("ezer$ezer_version/client/wiki.css");
   $skin=      'ck';
 
   $abs_roots= array(
@@ -47,10 +48,9 @@
   
   // bude vloženo do objektu Ezer.konst
   $const= (object)array(
-    'aaa' => "5"
-  , 'll' => 260
+    '$.test.comp.attr.x' => "'hezký:'"
   );
   // je to aplikace se startem v podsložce
-  require_once("../$ezer_version/ezer_main.php");
+  require_once("../ezer$ezer_version/ezer_main.php");
 
   ?>

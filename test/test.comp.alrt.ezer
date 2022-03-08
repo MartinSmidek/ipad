@@ -1,2 +1,11 @@
-#pragma attrib
-func onfocus() { alert('Jsem zde') }
+//#define ezer4
+# test podmíněného překladu
+const beg=1
+#if variant_appl!=3.20
+const ezer31= 'ok'
+const ezer32= 'ko'
+#else
+const ezer31= 'ko'
+const ezer32= 'ok'
+#endif
+const end=4

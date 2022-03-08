@@ -1,21 +1,53 @@
 #pragma attrib,-nogen
 //const c1={co:'něco'}
 //const x="něco"
-const c2=2+3
-//var   v1=4+5
+//#if version_ezer==3.2
+//const x: text,
+//      y= `to je ${x}`
+//#else
+//const y= 'to je ${x}'
+//#endif
+//const y=`${8*-9} jiného`
+//const c1=[11,22,33]
+//const c1:array
+//const c2:number
+//const c2=2
+//const c3= c1[c2]
+//const x:text
+//      c2=2+3
+//      c3= -1
+//var   v1=4
+//var v2=55+66
+//var v3={a:'alfa',b:y}
 //menu m {type:'context' 
 //  active:m.i
 //  active:*
-//  title:x 
-//  par:{a:{b:2}}
+//  title:x
+//  par:{a:{b:x}}
 //  par:{a:[1,2]}
-//  item i 
+//  item i {
+//    par:{typ:'fill'}
+//    par:c1
+//      par:{
+//        infos: [
+//          {title:'[fa-object-group] Schema databáze',
+//           html:"Schema databáze<br><br><img src='tut/img/schema_db_2021.png'>"}
+//        ],
+//        tables: {
+//          ora_a:  "id_a>*,attr_a,jmena>_seznam;",
+//          ora_ab: "id_ab>-,id_a>ora_a,id_b>ora_b,attr_ab",
+//          ora_b:  "id_b>*,attr_b",
+//          _jmena: "id_jmena>*,jmeno"
+//        },
+//        css: 'stat' // styl tabulky
+//      }
+//  }
 //}
 //const red='color:red'
 //func onfocus() { u1.load(1) }
 //use u1: form {
 //use u1: form _f
-//form _f { 
+form _f [,,*,*] { 
 //  view d: table _jmena {
 //    join:'left'
 //  }
@@ -27,6 +59,13 @@ const c2=2+3
 //      php.get_expr4('1+1') // pro zobrazení CG
 //    }
 //  }
+//  field fld [70,20,50,] { 
+//#if ezer=3.2
+//    title:y 
+//#else 
+//    title:'y'
+//#endif
+//  }
 //  field [0,0,100,] { data:_jmena.jmeno }
 //  field { data:d.jmeno }
 //  field { type:'date'
@@ -36,7 +75,7 @@ const c2=2+3
 //    map_pipe:sex_jmena.zkratka
 //  }
 //  select
-//}
+}
 
 //const a2:text
 //form f2 { css:a }
